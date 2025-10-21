@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Verification</title>
+  <style>
+    body {
+      background-color: #0b1620;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 400px;
+      padding: 30px 20px;
+    }
+    
+    .icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .loading {
+      border: 8px solid rgba(255,255,255,0.1);
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+    }
+    
+    h2 { 
+      margin: 10px 0 5px; 
+      font-size: 1.8rem;
+    }
+    
+    h3 { 
+      margin: 15px 0 10px;
+      font-size: 1.4rem;
+    }
+    
+    p { 
+      color: #b8b8b8; 
+      margin: 0 0 20px; 
+      line-height: 1.5;
+    }
+    
+    button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    
+    .success .icon { 
+      background-color: rgba(52, 152, 219, 0.2); 
+      border: 2px solid #3498db;
+    }
+    
+    .fail .icon { 
+      background-color: rgba(231, 76, 60, 0.2);
+      border: 2px solid #e74c3c;
+    }
+    
+    .same .icon { 
+      background-color: rgba(39, 174, 96, 0.2);
+      border: 2px solid #27ae60;
+    }
+    
+    .success h3 { color: #3498db; }
+    .fail h3 { color: #e74c3c; }
+    .same h3 { color: #27ae60; }
+    
+    .developer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+    
+    .developer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    
+    .developer a:hover {
+      text-decoration: underline;
+    }
+    
+    .offline-warning {
+      background: rgba(231, 76, 60, 0.1);
+      border: 1px solid #e74c3c;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+      color: #e74c3c;
+    }
+    
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div id="loadingScreen">
+    <div class="loading"></div>
+    <h2>Device Verification</h2>
+    <p>Scanning your device for security verification...</p>
+    <div id="offlineWarning" class="offline-warning hidden">
+      ⚠️ You appear to be offline. Showing limited functionality.
+    </div>
+    
+    <div class="developer">
+      Developed by <a href="https://t.me/txgimran" target="_blank">#txg</a>
+    </div>
+  </div>
+
+  <div id="successScreen" class="hidden success">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="none" stroke="#3498db" stroke-width="4" viewBox="0 0 24 24">
+        <path d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <h2>Device Verification</h2>
+    <h3>Verification Successful</h3>
+    <p>Your device has been successfully verified and registered.</p>
+    <button onclick="closeWindow()">Continue to Bot</button>
+    
+    <div class="developer">
+      Developed by <a href="https://t.me/txgimran" target="_blank">#txg</a>
+    </div>
+  </div>
+
+  <div id="failScreen" class="hidden fail">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="none" stroke="#e74c3c" stroke-width="4" viewBox="0 0 24 24">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </div>
+    <h2>Device Verification</h2>
+    <h3>VPN Detected</h3>
+    <p>Please disable your VPN and try again to complete verification.</p>
+    <button onclick="closeWindow()">Close</button>
+    
+    <div class="developer">
+      Developed by <a href="https://t.me/txgimran" target="_blank">#txg</a>
+    </div>
+  </div>
+
+  <div id="sameScreen" class="hidden same">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="none" stroke="#27ae60" stroke-width="4" viewBox="0 0 24 24">
+        <path d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <h2>Device Verification</h2>
+    <h3>Device Already Verified</h3>
+    <p>This device has already been verified. You can still refer friends to earn rewards!</p>
+    <button onclick="closeWindow()">Continue to Bot</button>
+    
+    <div class="developer">
+      Developed by <a href="https://t.me/txgimran" target="_blank">#txg</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // DOM Elements
+  const loadingScreen = document.getElementById('loadingScreen');
+  const successScreen = document.getElementById('successScreen');
+  const failScreen = document.getElementById('failScreen');
+  const sameScreen = document.getElementById('sameScreen');
+  const offlineWarning = document.getElementById('offlineWarning');
+
+  // URL Parameters
+  const params = new URLSearchParams(window.location.search);
+  const webhookUrl = decodeURIComponent(params.get("webhookUrl") || "");
+  const botId = params.get("botId") || "";
+
+  // Device verification tracking - BOT SPECIFIC
+  const VERIFIED_DEVICES_KEY = `classicVerified_${botId}`;
+  
+  // Offline detection
+  let isOffline = false;
+  
+  // Check online status
+  function checkOnlineStatus() {
+    if (!navigator.onLine) {
+      isOffline = true;
+      offlineWarning.classList.remove('hidden');
+    }
+  }
+  
+  // Start verification immediately
+  document.addEventListener('DOMContentLoaded', startVerification);
+
+  async function startVerification() {
+    try {
+      // Check if user is offline
+      checkOnlineStatus();
+      
+      // Listen for online/offline events
+      window.addEventListener('online', () => {
+        isOffline = false;
+        offlineWarning.classList.add('hidden');
+      });
+      
+      window.addEventListener('offline', () => {
+        isOffline = true;
+        offlineWarning.classList.remove('hidden');
+      });
+      
+      // Wait for 2 seconds
+      await delay(2000);
+      
+      // If user went offline during loading, show same device without tracking
+      if (isOffline || !navigator.onLine) {
+        showScreen('sameScreen');
+        return;
+      }
+      
+      // Create device fingerprint (user_hash)
+      const user_hash = createUserHash();
+      
+      // Check for VPN (only if online)
+      let vpn = false;
+      if (!isOffline) {
+        vpn = await checkForVPN();
+      }
+      
+      // Prepare results for bot
+      const results = {
+        user_hash: user_hash,
+        captcha: "true",
+        vpn: vpn ? "true" : "false"
+      };
+      
+      if (vpn) {
+        // VPN detected
+        showScreen('failScreen');
+        if (!isOffline) {
+          sendWebhook(results, "vpn_blocked");
+        }
+      } else {
+        // Check if device already verified FOR THIS SPECIFIC BOT
+        const verifiedDevices = getVerifiedDevices();
+        const alreadyVerified = verifiedDevices.includes(user_hash);
+        
+        if (alreadyVerified) {
+          // Same device FOR THIS BOT
+          showScreen('sameScreen');
+          if (!isOffline) {
+            sendWebhook(results, "already_verified");
+          }
+        } else {
+          // New device - only mark as verified if online
+          if (!isOffline) {
+            markDeviceAsVerified(user_hash);
+            showScreen('successScreen');
+            sendWebhook(results, "verified");
+          } else {
+            // If offline, show same device without tracking
+            showScreen('sameScreen');
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      // If any error occurs (likely due to offline), show same device
+      showScreen('sameScreen');
+    }
+  }
+
+  function showScreen(screenId) {
+    // Hide all screens
+    loadingScreen.classList.add('hidden');
+    successScreen.classList.add('hidden');
+    failScreen.classList.add('hidden');
+    sameScreen.classList.add('hidden');
+    
+    // Show the selected screen
+    document.getElementById(screenId).classList.remove('hidden');
+  }
+
+  function getVerifiedDevices() {
+    try {
+      const stored = localStorage.getItem(VERIFIED_DEVICES_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function markDeviceAsVerified(user_hash) {
+    try {
+      const verifiedDevices = getVerifiedDevices();
+      if (!verifiedDevices.includes(user_hash)) {
+        verifiedDevices.push(user_hash);
+        localStorage.setItem(VERIFIED_DEVICES_KEY, JSON.stringify(verifiedDevices));
+      }
+    } catch (error) {
+      console.error('Error saving verified device:', error);
+    }
+  }
+
+  function createUserHash() {
+    // Create a unique user_hash using multiple device attributes
+    const factors = [
+      navigator.userAgent,
+      navigator.hardwareConcurrency,
+      screen.width,
+      screen.height,
+      screen.colorDepth,
+      navigator.language,
+      new Date().getTimezoneOffset(),
+      navigator.platform,
+      navigator.deviceMemory || 'unknown',
+      navigator.maxTouchPoints || 'unknown'
+    ].join('|');
+    
+    // Create a hash
+    let hash = 0;
+    for (let i = 0; i < factors.length; i++) {
+      const char = factors.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    return Math.abs(hash).toString(36).slice(0, 12).toUpperCase();
+  }
+
+  async function checkForVPN() {
+    try {
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      pc.createDataChannel('');
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      
+      return new Promise(resolve => {
+        let vpnDetected = false;
+        
+        pc.onicecandidate = (ice) => {
+          if (!ice || !ice.candidate) {
+            resolve(vpnDetected);
+            return;
+          }
+          
+          const candidate = ice.candidate.candidate;
+          if (candidate.includes('relay') || candidate.includes('srflx') || 
+              candidate.includes('turn') || candidate.includes('vpn') ||
+              candidate.includes('proxy')) {
+            vpnDetected = true;
+          }
+        };
+        
+        setTimeout(() => resolve(vpnDetected), 1500);
+      });
+    } catch (error) {
+      console.error('VPN check error:', error);
+      return false;
+    }
+  }
+
+  function sendWebhook(results, status) {
+    if (!webhookUrl || isOffline) return;
+    
+    const payload = {
+      botId: botId,
+      status: status,
+      results: results,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent
+    };
+    
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(response => {
+      console.log('Webhook sent successfully');
+    }).catch(error => {
+      console.error('Webhook error:', error);
+    });
+  }
+
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function closeWindow() {
+    // Try multiple methods to close the window
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.close();
+    }
+    
+    setTimeout(() => {
+      window.location.href = 'about:blank';
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
